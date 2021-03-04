@@ -10,7 +10,7 @@ import java.util.StringJoiner;
 
 public class URLCreator {
 
-    public static boolean sendPostRequest(double longitude, double latitute, String name, String address) throws IOException, InterruptedException {
+    public static boolean sendPostRequest(String longitude, String latitute, String name, String address) throws IOException, InterruptedException {
         //setting up the connection
         String MARKERS_ADDRESS = "https://4e49f597b226.ngrok.io/markers";
         URL url = new URL(MARKERS_ADDRESS);
@@ -21,8 +21,8 @@ public class URLCreator {
 
         //setting up and convert values which will be send
         Map<String, String> arguments = new HashMap<>();
-        arguments.put("longitude", Double.toString(longitude));
-        arguments.put("latitute", Double.toString(latitute));
+        arguments.put("longitude", longitude);
+        arguments.put("latitute", latitute);
         arguments.put("name", name);
         arguments.put("address", address);
         StringJoiner sj = new StringJoiner("&");

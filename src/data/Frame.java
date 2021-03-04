@@ -2,6 +2,7 @@ package data;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class Frame {
 
@@ -31,6 +32,30 @@ public class Frame {
         //button listener logic
 
         sendingButton.addActionListener(e -> {
+            String longitudeStr = longitudeTextField.getText();
+            String latituteStr = latituteTextField.getText();
+            String name = nameTextField.getText();
+            String address = addressTextField.getText();
+
+            if(!longitudeStr.equals("") && !latituteStr.equals("") && !name.equals("") && !address.equals("")) {
+                boolean response = false;
+                try {
+                    response = URLCreator.sendPostRequest(longitudeStr, latituteStr, name, address);
+                } catch (InterruptedException | IOException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
+                if(response) {
+                    JOptionPane.showMessageDialog(null, "Sending of data was successful.", "InfoBox: Successful Sending", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Sending of data was not successful.", "InfoBox: Unsuccessful Sending", JOptionPane.INFORMATION_MESSAGE);
+                }
+                longitudeTextField.setText("");
+                latituteTextField.setText("");
+                nameTextField.setText("");
+                addressTextField.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "There has to be text in each textfields.", "InfoBox: Data wasn't send.", JOptionPane.INFORMATION_MESSAGE);
+            }
 
         });
 
